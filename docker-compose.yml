@@ -1,0 +1,47 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    volumes:
+      - ./backend:/app
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=$FLASK_APP
+      - FLASK_DEBUG=$FLASK_DEBUG
+      - FLASK_RUN_HOST=$FLASK_RUN_HOST
+      - FLASK_ENV=$FLASK_ENV
+      - SECRET_KEY=$BACKEND_SECRET_KEY
+      - POSTGRES_DSN=$POSTGRES_DSN
+      - DEFAULT_DB_SCHEMA=$BACKEND_DB_SCHEMA
+      - DB_NAME=$BACKEND_DB_NAME
+      - DB_USER=$POSTGRES_USER
+      - DB_PASSWORD=$POSTGRES_PASSWORD
+      - DB_HOST=$DB_HOST
+      - DB_PORT=5432
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: $DEFAULT_DB_NAME
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:

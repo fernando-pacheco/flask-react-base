@@ -21,7 +21,10 @@ def config_swagger(app):
         tags=[
             {'name': 'Auth', 'description': 'Gestão de autenticação'},
             {'name': 'Usuários', 'description': 'Gestão de Usuários'},
-            {'name': 'Health Checker', 'description': 'Gestão de saúde do sistema'},
+            {
+                'name': 'Health Checker',
+                'description': 'Gestão de saúde do sistema',
+            },
         ],
     )
 

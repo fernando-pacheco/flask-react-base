@@ -5,7 +5,7 @@ export class BaseService {
     async get() {
         try {
             const response = await api.get("/cliente")
-            return response
+            return response.data
         } catch (error) {
             if (error instanceof AxiosError) {
                 return error.response
